@@ -5,7 +5,7 @@ license: MIT
 
 '''
 
-__version__ = '2021.03.11'
+__version__ = '2021.3.11.1'
 
 __all__ = [
     'index',
