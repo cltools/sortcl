@@ -1,7 +1,39 @@
-'''sortcl: sort multiple angular power spectra in healpy input order
+# sortcl: sort multiple angular power spectra in healpy input order
 
-author: Nicolas Tessore <n.tessore@ucl.ac.uk>
-license: MIT
+# author: Nicolas Tessore <n.tessore@ucl.ac.uk>
+# license: MIT
+'''
+
+Sort angular power spectra (:mod:`sortcl`)
+==========================================
+
+.. currentmodule:: sortcl
+
+This is a minimal Python package to sort input angular power spectra into the
+order expected by healpy's :func:`~healpy.sphtfunc.synalm` and
+:func:`~healpy.sphtfunc.synfast` functions.
+
+The package can be installed using pip::
+
+    pip install sortcl
+
+Then import the :func:`~sortcl.sortcl` function from the package::
+
+    from sortcl import sortcl
+
+Current functionality covers the absolutely minimal use case.  Please open an
+issue on GitHub if you would like to see anything added.
+
+
+Reference/API
+-------------
+
+.. autosummary::
+   :toctree: api
+   :nosignatures:
+
+   sortcl
+   index
 
 '''
 
@@ -65,7 +97,8 @@ def sortcl(cls, pairs, new=True):
     '''sort cls in healpy synalm/synfast order
 
     Given a list of cls and a list of pairs, return a new list of cls in the
-    order that healpy's ``synalm`` and ``synfast`` expect.
+    order that healpy's :func:`~healpy.sphtfunc.synalm` and
+    :func:`~healpy.sphtfunc.synfast` expect.
 
     The list of pairs is any list of objects of length 2, for example strings:
     ``['TT', 'TE', 'TB']``.
