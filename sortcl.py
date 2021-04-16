@@ -1,5 +1,3 @@
-# sortcl: sort multiple angular power spectra in healpy input order
-
 # author: Nicolas Tessore <n.tessore@ucl.ac.uk>
 # license: MIT
 '''
@@ -34,14 +32,16 @@ Reference/API
 
    sortcl
    index
+   cl_indices
 
 '''
 
-__version__ = '2021.3.11.1'
+__version__ = '2021.4.16'
 
 __all__ = [
     'index',
     'sortcl',
+    'cl_indices',
 ]
 
 
@@ -91,6 +91,18 @@ def index(pairs):
                 idict[b] = len(idict)
             index.append(tuple(sorted([idict[a], idict[b]])))
         return index
+
+
+def cl_indices(n, new=True):
+    '''return array indices in healpy synalm/synfast order
+
+    '''
+    ii, jj = [], []
+    for i in range(n):
+        for j in range(i, n):
+            ii.append(i if new is False else j-i)
+            jj.append(j)
+    return ii, jj
 
 
 def sortcl(cls, pairs, new=True):
@@ -153,14 +165,12 @@ def sortcl(cls, pairs, new=True):
 
     sorted_cls = []
 
-    for i in range(n):
-        for j in range(i, n):
-            pos = (i, j) if new is False else (j-i, j)
-            try:
-                k = x.index(pos)
-            except ValueError:
-                sorted_cls.append(None)
-            else:
-                sorted_cls.append(cls[k])
+    for pos in zip(*cl_indices(n, new)):
+        try:
+            k = x.index(pos)
+        except ValueError:
+            sorted_cls.append(None)
+        else:
+            sorted_cls.append(cls[k])
 
     return sorted_cls
