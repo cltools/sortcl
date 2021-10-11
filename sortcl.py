@@ -36,12 +36,13 @@ Reference/API
 
 '''
 
-__version__ = '2021.4.16'
+__version__ = '2021.10.11'
 
 __all__ = [
     'index',
     'sortcl',
     'cl_indices',
+    'enumerate_cls',
 ]
 
 
@@ -103,6 +104,19 @@ def cl_indices(n, new=True):
             ii.append(i if new is False else j-i)
             jj.append(j)
     return ii, jj
+
+
+def enumerate_cls(cls, new=True):
+    '''enumerate an array of cls
+
+    Returns tuples ``i, j, cl`` where ``i, j`` are array indices and ``cl`` is
+    the associated cl at that position.
+
+    '''
+    n = int((2*len(cls))**0.5)
+    if len(cls) != n*(n+1)//2:
+        raise TypeError('length of cls array is not a triangle number')
+    return zip(*cl_indices(n), cls)
 
 
 def sortcl(cls, pairs, new=True):
